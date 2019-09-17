@@ -1,28 +1,57 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+	<section id="app" class="todoapp">
+		<header class="header">
+			<h1>todos</h1>
+			<todo-input
+				class="new-todo" autofocus autocomplete="off"
+				placeholder="What needs to be done?"
+				@add-todo="addTodo">
+			</todo-input>
+		</header>
+		<todo-list
+			:todos="todos"
+			:filtered-todos="filteredTodos">
+		</todo-list>
+	</section>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoInput from './components/TodoInput.vue';
+import TodoList from './components/TodoList.vue';
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+	name: 'app',
+	components: {
+		TodoInput,
+		TodoList
+	},
+	data() {
+		return {
+			todos: [],
+			uid: 0
+		}
+	},
+	computed: {
+		filteredTodos() {
+			return this.todos;
+		}
+	},
+	methods: {
+		addTodo(todoTitle) {
+			const newTodo = todoTitle && todoTitle.trim();
+			if (!newTodo) {
+				return;
+			}
+			this.todos.push({
+				id: this.uid++,
+				title: newTodo,
+				completed: false
+			});
+		}
+	}
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import url("https://unpkg.com/todomvc-app-css@2.2.0/index.css");
 </style>
