@@ -2,12 +2,13 @@
 	<section class="main" v-show="todos.length" v-cloak>
 		<input class="toggle-all" type="checkbox">
 		<ul class="todo-list">
-			<li v-for="todo in filteredTodos"
+			<li
+				v-for="todo in filteredTodos"
 				class="todo"
-				:key="todo.id">
+				:key="todo.id"
+			>
 				<todo-item
-					:todo="todo">
-				</todo-item>
+					:todo="todo" />
 			</li>
 		</ul>
 	</section>
@@ -20,9 +21,13 @@ export default {
 	components: {
 		TodoItem
 	},
-	props: {
-		todos: Array,
-		filteredTodos: Array
+	computed: {
+		todos() {
+			return this.$store.state.todos;
+		},
+		filteredTodos() {
+			return this.$store.getters.filteredTodos;
+		}
 	}
 }
 </script>

@@ -5,49 +5,22 @@
 			<todo-input
 				class="new-todo" autofocus autocomplete="off"
 				placeholder="What needs to be done?"
-				@add-todo="addTodo">
-			</todo-input>
+			/>
 		</header>
-		<todo-list
-			:todos="todos"
-			:filtered-todos="filteredTodos">
-		</todo-list>
+		<todo-list />
 	</section>
 </template>
 
 <script>
+import store from './store';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
-
 export default {
 	name: 'app',
+	store,
 	components: {
 		TodoInput,
 		TodoList
-	},
-	data() {
-		return {
-			todos: [],
-			uid: 0
-		}
-	},
-	computed: {
-		filteredTodos() {
-			return this.todos;
-		}
-	},
-	methods: {
-		addTodo(todoTitle) {
-			const newTodo = todoTitle && todoTitle.trim();
-			if (!newTodo) {
-				return;
-			}
-			this.todos.push({
-				id: this.uid++,
-				title: newTodo,
-				completed: false
-			});
-		}
 	}
 }
 </script>
