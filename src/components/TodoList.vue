@@ -4,7 +4,7 @@
 		<ul class="todo-list">
 			<li
 				v-for="todo in filteredTodos"
-				class="todo"
+				:class="['todo', {completed: todo.completed}]"
 				:key="todo.id"
 			>
 				<todo-item
