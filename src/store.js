@@ -15,16 +15,34 @@ const todoStorage = {
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
 	}
 };
+const filters = {
+	all(todos) {
+		return todos;
+	},
+	active(todos) {
+		return todos.filter((todo) =>
+			!todo.completed
+		);
+	},
+	completed(todos) {
+		return todos.filter((todo) =>
+			todo.completed
+		);
+	}
+};
 export default new Vuex.Store({
 	state: {
-		todos: todoStorage.fetch()
+		todos: todoStorage.fetch(),
+		visibility: 'all'
 	},
 	getters: {
-		filteredTodos: (state) => state.todos,
+		filteredTodos: (state) =>
+			filters[state.visibility](state.todos),
 		remaining: (state) => {
 			const todos = state.todos.filter((todo) => !todo.completed);
 			return todos.length;
-		}
+		},
+		filters: (state) => filters
 	},
 	mutations: {
 		addTodo(state, todoTitle) {
@@ -51,6 +69,12 @@ export default new Vuex.Store({
 		},
 		save(state) {
 			todoStorage.save(state.todos);
+		},
+		hashChange(state) {
+			const visibility = window.location.hash.replace(/#\/?/, '');
+			if (filters[visibility]) {
+				state.visibility = visibility;
+			}
 		}
 	}
 });
