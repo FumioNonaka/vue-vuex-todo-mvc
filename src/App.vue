@@ -2,10 +2,7 @@
 	<section id="app" class="todoapp">
 		<header class="header">
 			<h1>todos</h1>
-			<todo-input
-				class="new-todo" autofocus autocomplete="off"
-				placeholder="What needs to be done?"
-			/>
+			<todo-input />
 		</header>
 		<todo-list />
 		<todo-controller />
@@ -30,6 +27,10 @@ export default {
 			(state, getters) => state.todos,
 			(newValue, oldValue) => store.commit('save')
 		);
+		window.addEventListener('hashchange', () =>
+			store.commit('hashChange')
+		);
+		store.commit('hashChange');
 	}
 }
 </script>
