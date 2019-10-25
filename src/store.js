@@ -42,7 +42,8 @@ export default new Vuex.Store({
 			const todos = state.todos.filter((todo) => !todo.completed);
 			return todos.length;
 		},
-		filters: (state) => filters
+		filters: (state) => filters,
+		allDone: (state, getters) => getters.remaining === 0
 	},
 	mutations: {
 		addTodo(state, todoTitle) {
@@ -75,6 +76,11 @@ export default new Vuex.Store({
 			if (filters[visibility]) {
 				state.visibility = visibility;
 			}
+		},
+		setAllDone(state, value) {
+			state.todos.forEach((todo) =>
+				todo.completed = value
+			);
 		}
 	}
 });

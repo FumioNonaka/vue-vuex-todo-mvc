@@ -1,6 +1,14 @@
 <template>
 	<section class="main" v-show="todos.length" v-cloak>
-		<input class="toggle-all" type="checkbox">
+		<input
+			id="toggle-all"
+			class="toggle-all"
+			type="checkbox"
+			:value="allDone"
+			:checked="allDone"
+			@change="onInput"
+		>
+		<label for="toggle-all" />
 		<ul class="todo-list">
 			<li
 				v-for="todo in filteredTodos"
@@ -27,6 +35,19 @@ export default {
 		},
 		filteredTodos() {
 			return this.$store.getters.filteredTodos;
+		},
+		allDone: {
+			get() {
+				return this.$store.getters.allDone;
+			},
+			set(value) {
+				this.$store.commit('setAllDone', value);
+			}
+		}
+	},
+	methods: {
+		onInput() {
+			this.allDone = !this.allDone;
 		}
 	}
 }

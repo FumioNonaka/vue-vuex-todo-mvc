@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {mapState, mapGetters} from 'vuex';
 export default {
 	name: 'TodoController',
 	filters: {
@@ -25,18 +26,14 @@ export default {
 		}
 	},
 	computed: {
-		todos() {
-			return this.$store.state.todos;
-		},
-		remaining() {
-			return this.$store.getters.remaining;
-		},
-		filters() {
-			return this.$store.getters.filters;
-		},
-		visibility() {
-			return this.$store.state.visibility;
-		}
+		...mapState([
+			'todos',
+			'visibility'
+		]),
+		...mapGetters([
+			'remaining',
+			'filters'
+		])
 	}
 }
 </script>
