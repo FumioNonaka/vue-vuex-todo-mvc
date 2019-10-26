@@ -50,7 +50,7 @@ export default {
 			this.allDone = !this.allDone;
 		}
 	}
-}
+};
 </script>
 
 <style scoped>

@@ -81,6 +81,9 @@ export default new Vuex.Store({
 			state.todos.forEach((todo) =>
 				todo.completed = value
 			);
+		},
+		removeCompleted(state) {
+			state.todos = filters.active(state.todos);
 		}
 	}
 });

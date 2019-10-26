@@ -13,11 +13,16 @@
 				</a>
 			</li>
 		</ul>
+		<button class="clear-completed"
+			v-show="todos.length > remaining"
+			@click="removeCompleted">
+			Clear completed
+		</button>
 	</footer>
 </template>
 
 <script>
-import {mapState, mapGetters} from 'vuex';
+import {mapState, mapGetters, mapMutations} from 'vuex';
 export default {
 	name: 'TodoController',
 	filters: {
@@ -34,6 +39,9 @@ export default {
 			'remaining',
 			'filters'
 		])
-	}
+	},
+	methods: mapMutations({
+		removeCompleted: 'removeCompleted'
+	})
 }
 </script>
