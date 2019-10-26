@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
 	name: 'TodoInput',
 	data() {
@@ -15,11 +16,11 @@ export default {
 			newTodo: ''
 		};
 	},
-	methods: {
-		addTodo() {
-			this.$store.commit('addTodo', this.newTodo);
-			this.newTodo = '';
-		}
-	}
-}
+	methods: mapMutations({
+			addTodo(commit) {
+				commit('addTodo', this.newTodo);
+				this.newTodo = '';
+			}
+		})
+};
 </script>
