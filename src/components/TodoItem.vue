@@ -6,7 +6,8 @@
 			:checked="todo.completed"
 			@input="onInput({todo: todo, completed: !todo.completed})"
 		>
-			<label>{{todo.title}}</label>
+		<label @dblclick="editTodo(todo)">
+			{{todo.title}}</label>
 		<button
 			class="destroy"
 			@click="removeTodo(todo)">
@@ -23,7 +24,8 @@ export default {
 	},
 	methods: mapMutations({
 		removeTodo: 'removeTodo',
-		onInput: 'done'
+		onInput: 'done',
+		editTodo: 'editTodo'
 	})
 }
 </script>
