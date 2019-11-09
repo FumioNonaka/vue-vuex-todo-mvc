@@ -12,10 +12,12 @@
 		<ul class="todo-list">
 			<li
 				v-for="todo in filteredTodos"
-				:class="['todo', {completed: todo.completed}]"
+				:class="{completed: todo.completed, editing: todo === editedTodo}"
 				:key="todo.id"
 			>
 				<todo-item
+					:todo="todo" />
+				<todo-edit
 					:todo="todo" />
 			</li>
 		</ul>
@@ -23,19 +25,23 @@
 </template>
 
 <script>
+import {mapState, mapGetters} from 'vuex';
 import TodoItem from './TodoItem.vue';
+import TodoEdit from './TodoEdit.vue';
 export default {
 	name: 'TodoList',
 	components: {
-		TodoItem
+		TodoItem,
+		TodoEdit
 	},
 	computed: {
-		todos() {
-			return this.$store.state.todos;
-		},
-		filteredTodos() {
-			return this.$store.getters.filteredTodos;
-		},
+		...mapState([
+			'todos',
+			'editedTodo'
+		]),
+		...mapGetters([
+			'filteredTodos'
+		]),
 		allDone: {
 			get() {
 				return this.$store.getters.allDone;

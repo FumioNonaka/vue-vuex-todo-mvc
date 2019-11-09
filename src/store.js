@@ -33,7 +33,8 @@ const filters = {
 export default new Vuex.Store({
 	state: {
 		todos: todoStorage.fetch(),
-		visibility: 'all'
+		visibility: 'all',
+		editedTodo: null
 	},
 	getters: {
 		filteredTodos: (state) =>
@@ -84,6 +85,24 @@ export default new Vuex.Store({
 		},
 		removeCompleted(state) {
 			state.todos = filters.active(state.todos);
+		},
+		editTodo(state, todo) {
+			state.editedTodo = todo;
+		},
+		doneEdit(state, todoTitle) {
+			if (!state.editedTodo) {
+				return;
+			}
+			const title = todoTitle.trim();
+			if (title) {
+				state.editedTodo.title = title;
+			} else {
+				this.commit('removeTodo', state.editedTodo);
+			}
+			state.editedTodo = null;
+		},
+		cancelEdit(state) {
+			state.editedTodo = null;
 		}
 	}
 });
